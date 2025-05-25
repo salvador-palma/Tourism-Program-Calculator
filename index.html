@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="main.js"></script>
+    <title>Program Costs</title>
+</head>
+<body>
+    <aside id="PopUp" class="">
+        <section id="CreateService" class="hidden">
+            <div class="vertical-display dropDown">
+                <select class="dropDown" id="AddServiceType">
+                    <option value="Airplane" selected>Airplane</option>
+                    <option value="Transfer">Transfer</option>
+                    <option value="Hotel">Hotel</option>
+                    <option value="Tour">Tour</option>
+                    <option value="Tour Leader">Tour Leader</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <input type="text" id="AddServiceName" class="inputfieldGrey" placeholder="Service Name (i.g Private Transfer 4PAX)"/>
+                <div class="horizontal-display">
+                    <button id="CancelServiceButton" type="menu">Return</button>
+                    <button id="AddServiceButton" type="submit">Add</button>
+                </div>
+                
+            </div>
+        </section>
+        <section id="ContractView" class="hidden">
+            <div class="vertical-display">
+                
+            </div>
+            
+        </section>
+
+    </aside>
+    <main class="vertical-display">
+        <div id="CreateOpenProgram-Container" class="vertical-display hidden">
+            <button id="CreateProgram">Create Program</button>
+            <button id="OpenProgram">Open Program</button>
+        </div>
+        <div id="Program-Container" class="vertical-display ">
+
+            <div id="Program-Name-Container" class="horizontal-display textinput" style="width: 30vw;">
+                <label for="Program-Name">Program Name:</label>
+                <input type="text" id="Program-Name" />
+            </div>
+
+
+            <div id="Program-Itenirary-Container" class="vertical-display">
+                
+                <div id="Program-Day-Container" class="vertical-display">
+                    <div class="Day-Container vertical-display">
+                        <div class="Day-Description horizontal-display">
+                            <span>DAY 1</span>
+                            <button class="Program-Day-Delete static-button" onclick="RemoveDay(this)">x</button>
+                        </div>
+                        <div class="Day-Services vertical-display">
+                            <div class="Program-Service-Container" class="vertical-display">
+                                <div class="Service horizontal-display">
+                                    <img src="/img/Airplane.png" />
+                                    <span>LIS - PAR Flight x1 Economy Seat</span>
+                                    <button class="static-button">x</button>
+                                </div>
+                            </div>
+                            <button class="Program-Day-Service">+ Service</button>
+                        </div>
+                        
+                    </div>
+                </div>
+                <button id="Program-Day-Add">+ Day</button>
+                
+                
+            </div>
+            
+            <div id="Program-Calculate-Container" class="vertical-display">
+                
+                
+            </div>            
+        </div>
+
+
+        <div id="Console">
+
+        </div>
+    </main>
+</body>
+</html>
