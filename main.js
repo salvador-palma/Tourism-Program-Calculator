@@ -117,8 +117,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var addDayBtn = document.getElementById("Program-Day-Add");
     addDayBtn.addEventListener("click", AddDay);
+
+
+    const seasonsBtns = document.querySelectorAll(".subseason-info");
+    seasonsBtns.forEach(element=> element.addEventListener("click", () => {
+
+    }))
 });
 
+function toggleSeasonDetails(){
+    
+}
 function removeAllButtonEvents(button) {
     const newButton = button.cloneNode(true);
     button.parentNode.replaceChild(newButton, button);
@@ -143,3 +152,129 @@ function removeAllButtonEvents(button) {
 //                         </div>
                         
 //                     </div>
+
+
+
+const AirplaneForm = `<div class="subseason vertical-display subseason-selected">
+                    <div class="subseason-info horizontal-display">
+                        <span>1 Jan - 5 Feb</span>
+                    </div>
+                    <div class="subseason-details vertical-display">
+                        <div class="subseason-date-range horizontal-display">
+                            <div class="horizontal-display textinput">
+                            <label for="Program-Name">From</label>
+                            <input type="date" class="inputfieldGrey"/>
+                            </div>
+                            <div class="horizontal-display textinput">
+                            <label for="Program-Name">To</label>
+                            <input type="date"  class="inputfieldGrey"/>
+                            </div>
+                        </div>
+                        <div class="subseason-detail-config horizontal-display">
+                            <div class="vertical-display textinput">
+                            <label for="Adult">Adult</label>
+                            <input type="number"  name="Adult" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Child">Child</label>
+                                <input type="number" name="Child" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Infant">Infant</label>
+                                <input type="number" name="Infant" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Tour Leader">Tour Leader</label>
+                                <input type="number" name="Tour Leader" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Taxes">Taxes</label>
+                                <input type="number" name="Taxes" class="inputfieldGrey"/>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                </div>`
+const TransferForm = `<div class="subseason vertical-display subseason-selected">
+                    <div class="subseason-info horizontal-display">
+                        <span>1 Jan - 5 Feb</span>
+                    </div>
+                    <div class="subseason-details vertical-display">
+                        <div class="subseason-date-range horizontal-display">
+                            <div class="horizontal-display textinput">
+                            <label for="Program-Name">From</label>
+                            <input type="date" class="inputfieldGrey"/>
+                            </div>
+                            <div class="horizontal-display textinput">
+                            <label for="Program-Name">To</label>
+                            <input type="date"  class="inputfieldGrey"/>
+                            </div>
+                        </div>
+                        <div class="subseason-detail-config horizontal-display">
+                            <div class="vertical-display textinput">
+                            <label for="Bus">Bus</label>
+                            <input type="number"  name="Bus" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Guide">Guide</label>
+                                <input type="number" name="Guide" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Others">Others</label>
+                                <input type="number" name="Others" class="inputfieldGrey"/>
+                            </div>
+                            
+                        </div>
+                       
+                    </div>
+
+                </div>`
+const HotelForm = `<div class="subseason vertical-display subseason-selected">
+                    <div class="subseason-info horizontal-display">
+                        <span>1 Jan - 5 Feb</span>
+                    </div>
+                    <div class="subseason-details vertical-display">
+                        <div class="subseason-date-range horizontal-display">
+                            <div class="horizontal-display textinput">
+                            <label for="Program-Name">From</label>
+                            <input type="date" class="inputfieldGrey"/>
+                            </div>
+                            <div class="horizontal-display textinput">
+                            <label for="Program-Name">To</label>
+                            <input type="date"  class="inputfieldGrey"/>
+                            </div>
+                        </div>
+                        <div class="subseason-detail-config horizontal-display">
+                            <div class="vertical-display textinput">
+                            <label for="Single">Single</label>
+                            <input type="number"  name="Single" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Double">Double</label>
+                                <input type="number" name="Double" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Triple">Triple</label>
+                                <input type="number" name="Triple" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Child">Child</label>
+                                <input type="number" name="Child" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Infant">Infant</label>
+                                <input type="number" name="Infant" class="inputfieldGrey"/>
+                            </div>
+                            <div class="vertical-display textinput">
+                                <label for="Extras">Extras</label>
+                                <input type="number" name="Extras" class="inputfieldGrey"/>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                </div>`
+const TourForm = ``
+const TourLeaderForm = ``
+const OtherForm = ``
