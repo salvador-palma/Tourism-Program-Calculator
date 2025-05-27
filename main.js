@@ -2,9 +2,14 @@ import { Program, ProgramType, Day, Service, AirplaneSeason, HotelSeason } from 
 
 var program;
 
+var selectedDay = null;
+var selectedService = null;
+
 function DisplayProgram(program){
     console.log("Refreshing...");
     const dayContainer = document.getElementById("Program-Day-Container")
+
+    document.getElementById("Program-Name").value = program.name;
     
     var i = 1;
     var innerText = ""
@@ -17,7 +22,10 @@ function DisplayProgram(program){
                                 <div class="Service horizontal-display">
                                     <img src="/img/${service.type}.png" />
                                     <span>${service.name}</span>
-                                    <button day="${i}" serv="${j}" class="static-button Day-Service-Delete">x</button>
+                                    <div class="horizontal-display">
+                                    <button class="static-button Day-Service-Config"><img src="/img/Pencil.png"></button>
+                                    <button day="${i}" serv="${j}" class="static-button Day-Service-Delete"><img src="/img/Bin.png"></button>
+                                    </div>
                                 </div>
                             </div>`;
             j++;
@@ -26,7 +34,7 @@ function DisplayProgram(program){
         innerText += `<div class="Day-Container vertical-display">
                         <div class="Day-Description horizontal-display">
                             <span>DAY ${i}</span>
-                            <button class="Program-Day-Delete static-button">x</button>
+                            <button class="Program-Day-Delete static-button"><img src="/img/Bin.png"></button>
                         </div>
                         <div class="Day-Services vertical-display">
                             ${innerTextServices}
@@ -43,9 +51,65 @@ function DisplayProgram(program){
 
     const serviceDeleteBtns = document.querySelectorAll('.Day-Service-Delete');
     serviceDeleteBtns?.forEach(element => element.addEventListener("click", () => RemoveService(element.getAttribute('day') - 1, element.getAttribute('serv'))));
+
+    const serviceBtns = document.querySelectorAll('.Day-Service-Config');
+    serviceBtns?.forEach((element, index) => element.addEventListener("click", () => {
+        HideObject(document.getElementById("ContractView"), false);
+        HideObject(document.getElementById("PopUp"), false);
+        window.scrollTo(0, 0);
+
+        selectedDay = element.parentNode.children[1].getAttribute('day') - 1;
+        selectedService = element.parentNode.children[1].getAttribute('serv');
+        console.log("Selected Day: " + selectedDay + ", Selected Service: " + selectedService);
+        DisplaySeasons(program, selectedDay, selectedService);
+    }));
     
     const addServiceBtns = document.querySelectorAll('.Program-Day-Service');
     addServiceBtns?.forEach((element, index) => element.addEventListener("click", () => ShowCreateServiceForm(index)));
+
+
+}
+
+function DisplaySeasons(program, day, service){
+    console.log("Refreshing Subseasons...");
+    const seasonContainer = document.getElementById("Subseason-Container");
+
+    const serviceCast = program.getService(service, day);
+    const type = serviceCast.type;
+
+    const title = document.getElementById("ContractView-Title").querySelector("h1");
+    const subtitle = document.getElementById("ContractView-Title").querySelector("span");
+    title.innerHTML = serviceCast.name;
+    subtitle.innerHTML = `Type - ${type}`;
+
+    var innerText = "";
+    serviceCast.subseasons.forEach(season => {
+        innerText += season.getInnerHTML();
+    });
+    seasonContainer.innerHTML = innerText;
+
+
+    const seasonBtns = document.querySelectorAll('.subseason-info');
+    seasonBtns?.forEach(element => element.addEventListener("click", () => ToggleSeasonDetails(element)));
+
+    const seasonDeleteBtns = document.querySelectorAll('.subseason-delete');
+    seasonDeleteBtns?.forEach((element, index) => element.addEventListener("click", () => RemoveSeason(index)));
+
+    const seasonSaveBtns = document.querySelectorAll('.subseason-save');
+    seasonSaveBtns?.forEach((element, index) => element.addEventListener("click", () => SaveSeason(element.parentNode.parentNode, index)));
+
+}
+
+function ToggleSeasonDetails(element) {
+    if( element.parentNode.classList.contains("subseason-selected")){
+        element.parentNode.classList.remove("subseason-selected");
+    }else{
+        const siblings = Array.from(element.parentNode.parentNode.children);
+        siblings.forEach(child => {
+            child.classList.remove("subseason-selected");
+        });
+        element.parentNode.classList.add("subseason-selected");
+    }
     
 }
 
@@ -56,13 +120,14 @@ function AddDay(){
 }
 
 function RemoveDay(n){
+    console.log("Removing day " + n);
     program.removeDay(n);
     DisplayProgram(program);
 }
 
 
 function AddService(day, name, type){
-    if(name == ""){name = "Unnamed Service"}
+    if(name == ""){name = `Unnamed ${type} Service`}
     program.addService(day, name, type);
     DisplayProgram(program);
 }
@@ -70,6 +135,45 @@ function AddService(day, name, type){
 function RemoveService(day, id){
     program.removeService(day, id);
     DisplayProgram(program);
+}
+
+function AddSeason(){
+    program.addSeason(selectedService, selectedDay);
+    DisplaySeasons(program, selectedDay, selectedService);
+}
+
+function CloseSeason(){
+    HideObject(document.getElementById("ContractView"), true);
+    HideObject(document.getElementById("PopUp"), true);
+    window.scrollTo(0, 0);
+}
+
+function RemoveSeason(index){
+    const serviceCast = program.getService(selectedService, selectedDay);
+    serviceCast.removeSeason(index);
+    DisplaySeasons(program, selectedDay, selectedService);
+}
+function SaveSeason(element, index){
+    const serviceCast = program.getService(selectedService, selectedDay);
+
+
+    const serviceCastSeason = serviceCast.subseasons[index];
+    
+    const result = serviceCastSeason.saveSeason(element, index, serviceCast);
+
+    if(result == "success"){
+        console.log("Season saved successfully.");
+        DisplaySeasons(program, selectedDay, selectedService);
+    }else{
+        console.log("Error saving season: " + result);
+        const consoleS = element.querySelector(".subseason-detail-console");
+        consoleS.innerHTML = result;
+
+    }
+
+
+    
+
 }
 
 function ShowCreateServiceForm(day){
@@ -118,6 +222,24 @@ document.addEventListener("DOMContentLoaded", function () {
     var addDayBtn = document.getElementById("Program-Day-Add");
     addDayBtn.addEventListener("click", AddDay);
 
+    var addSeasBtn = document.getElementById("AddSeasonButton");
+    addSeasBtn.addEventListener("click", AddSeason);
+
+    var closeDayBtn = document.getElementById("CloseSeasonButton");
+    closeDayBtn.addEventListener("click", CloseSeason);
+
+    var downloadBtn = document.getElementById("Download-Program");
+    downloadBtn.addEventListener("click", Download);
+
+    var loadBtn = document.getElementById("Load-Program");
+    loadBtn.addEventListener("click", Load);
+
+    var titleInputField = document.getElementById("Program-Name");
+    titleInputField.addEventListener("change", ()=>{
+        program.name = document.getElementById("Program-Name").value;
+    })
+
+    
 
     const seasonsBtns = document.querySelectorAll(".subseason-info");
     seasonsBtns.forEach(element=> element.addEventListener("click", () => {
@@ -125,156 +247,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }))
 });
 
-function toggleSeasonDetails(){
-    
+function Download() {
+    console.log("Downloading program...");
+    const blob = new Blob([JSON.stringify(program, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${program.name}.json`;
+    a.click();
 }
+function Load(){
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = () => {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            const rawObj = JSON.parse(reader.result);
+            program = Program.fromJSON(rawObj); // <- force into class
+            console.log('Loaded Program instance:', program);
+            DisplayProgram(program);
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
+
 function removeAllButtonEvents(button) {
     const newButton = button.cloneNode(true);
     button.parentNode.replaceChild(newButton, button);
     return newButton;
 }
 
-// <div id="Program-Day-Container" class="vertical-display">
-//                     <div class="Day-Container vertical-display">
-//                         <div class="Day-Description horizontal-display">
-//                             <span>DAY 1</span>
-//                             <button class="Program-Day-Delete static-button" onclick="RemoveDay(this)">x</button>
-//                         </div>
-//                         <div class="Day-Services vertical-display">
-//                             <div class="Program-Service-Container" class="vertical-display">
-//                                 <div class="Service horizontal-display">
-//                                     <img src="/img/Airplane.png" />
-//                                     <span>LIS - PAR Flight x1 Economy Seat</span>
-//                                     <button class="static-button" onclick="RemoveService(this)">x</button>
-//                                 </div>
-//                             </div>
-//                             <button class="Program-Day-Service" onclick="AddService(this)">+ Service</button>
-//                         </div>
-                        
-//                     </div>
 
-
-
-const AirplaneForm = `<div class="subseason vertical-display subseason-selected">
-                    <div class="subseason-info horizontal-display">
-                        <span>1 Jan - 5 Feb</span>
-                    </div>
-                    <div class="subseason-details vertical-display">
-                        <div class="subseason-date-range horizontal-display">
-                            <div class="horizontal-display textinput">
-                            <label for="Program-Name">From</label>
-                            <input type="date" class="inputfieldGrey"/>
-                            </div>
-                            <div class="horizontal-display textinput">
-                            <label for="Program-Name">To</label>
-                            <input type="date"  class="inputfieldGrey"/>
-                            </div>
-                        </div>
-                        <div class="subseason-detail-config horizontal-display">
-                            <div class="vertical-display textinput">
-                            <label for="Adult">Adult</label>
-                            <input type="number"  name="Adult" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Child">Child</label>
-                                <input type="number" name="Child" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Infant">Infant</label>
-                                <input type="number" name="Infant" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Tour Leader">Tour Leader</label>
-                                <input type="number" name="Tour Leader" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Taxes">Taxes</label>
-                                <input type="number" name="Taxes" class="inputfieldGrey"/>
-                            </div>
-                        </div>
-                       
-                    </div>
-
-                </div>`
-const TransferForm = `<div class="subseason vertical-display subseason-selected">
-                    <div class="subseason-info horizontal-display">
-                        <span>1 Jan - 5 Feb</span>
-                    </div>
-                    <div class="subseason-details vertical-display">
-                        <div class="subseason-date-range horizontal-display">
-                            <div class="horizontal-display textinput">
-                            <label for="Program-Name">From</label>
-                            <input type="date" class="inputfieldGrey"/>
-                            </div>
-                            <div class="horizontal-display textinput">
-                            <label for="Program-Name">To</label>
-                            <input type="date"  class="inputfieldGrey"/>
-                            </div>
-                        </div>
-                        <div class="subseason-detail-config horizontal-display">
-                            <div class="vertical-display textinput">
-                            <label for="Bus">Bus</label>
-                            <input type="number"  name="Bus" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Guide">Guide</label>
-                                <input type="number" name="Guide" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Others">Others</label>
-                                <input type="number" name="Others" class="inputfieldGrey"/>
-                            </div>
-                            
-                        </div>
-                       
-                    </div>
-
-                </div>`
-const HotelForm = `<div class="subseason vertical-display subseason-selected">
-                    <div class="subseason-info horizontal-display">
-                        <span>1 Jan - 5 Feb</span>
-                    </div>
-                    <div class="subseason-details vertical-display">
-                        <div class="subseason-date-range horizontal-display">
-                            <div class="horizontal-display textinput">
-                            <label for="Program-Name">From</label>
-                            <input type="date" class="inputfieldGrey"/>
-                            </div>
-                            <div class="horizontal-display textinput">
-                            <label for="Program-Name">To</label>
-                            <input type="date"  class="inputfieldGrey"/>
-                            </div>
-                        </div>
-                        <div class="subseason-detail-config horizontal-display">
-                            <div class="vertical-display textinput">
-                            <label for="Single">Single</label>
-                            <input type="number"  name="Single" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Double">Double</label>
-                                <input type="number" name="Double" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Triple">Triple</label>
-                                <input type="number" name="Triple" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Child">Child</label>
-                                <input type="number" name="Child" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Infant">Infant</label>
-                                <input type="number" name="Infant" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Extras">Extras</label>
-                                <input type="number" name="Extras" class="inputfieldGrey"/>
-                            </div>
-                        </div>
-                       
-                    </div>
-
-                </div>`
-const TourForm = ``
-const TourLeaderForm = ``
-const OtherForm = ``

@@ -2,27 +2,31 @@
     font-family: 'Mont-Medium';
     src: url(/Montserrat-Medium.ttf);
 }
-html{
-    min-height:100vh;
-    width:100vw;
+
+html {
+    min-height: 100vh;
+    width: 100vw;
     background-image: linear-gradient(125deg, #6e39ff, #8a09f3);
-    background-repeat:round;
+    background-repeat: round;
     overflow-x: hidden;
     font-family: 'Mont-Medium';
-}
-body{
-    margin:0;
-    padding:0;
+    scroll-behavior: smooth;
 }
 
-main{
+body {
+    margin: 0;
+    padding: 0;
+
+}
+
+main {
     box-sizing: border-box;
     background-color: whitesmoke;
     border-radius: 15px;
-    min-height:50vh;
-    min-width:20vw;
+    min-height: 50vh;
+    min-width: 20vw;
     max-width: 70vw;
-    width:fit-content;
+    width: fit-content;
     padding: 5vw 10vw;
     margin: auto;
     margin-top: 20vh;
@@ -30,17 +34,18 @@ main{
     box-shadow: 0 0 20px rgba(11, 0, 14, 0.171);
 }
 
-button{
+button {
     background-color: #6e39ff;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
-    width:100%;
+    width: 100%;
     cursor: pointer;
     margin: 5% 0;
     font-size: 1.2em;
-    &:hover{
+
+    &:hover {
         background-color: #8a09f3;
         transform: translateY(-2px);
         box-shadow: 0 0 10px rgba(11, 0, 14, 0.171);
@@ -48,91 +53,107 @@ button{
     }
 }
 
-.static-button{
-    &:hover{
+.static-button {
+    &:hover {
         transform: scale(1.05);
         box-shadow: none;
         transition: all 0.2s ease;
     }
 }
-.vertical-display{
+
+.vertical-display {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.horizontal-display{
+
+.horizontal-display {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.textinput{
+.textinput {
     position: relative;
-    &label{
+
+    &label {
         font-size: 1.2em;
         margin-bottom: 5px;
     }
-    &input{
+
+    &input {
         width: 100%;
         height: 100%;
         padding: 10px;
         border-radius: 5px;
         border: 1px solid #ccc;
         font-size: 1em;
-        
+
         margin-bottom: 10px;
     }
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-#Program-Container{
+#Program-Container {
 
-    &>*{
+    &>* {
         margin-top: 2vh;
     }
-    &>#Program-Itenirary-Container{
+
+    &>#Program-Itenirary-Container {
         width: 100%;
         border-radius: 15px;
         background-color: #bcabe9;
 
-        &>button{
-            width:35%;
+        &>button {
+            width: 35%;
         }
 
-        &>#Program-Day-Container{
+        &>#Program-Day-Container {
             width: 100%;
 
-            &>.Day-Container{
-                width:100%;
+            &>.Day-Container {
+                width: 100%;
 
-                &>.Day-Description{
+                &>.Day-Description {
                     background-color: #8a09f3;
                     color: white;
                     border-radius: 15px;
                     justify-content: space-between;
                     box-sizing: border-box;
-                    padding:0 2vw;
+                    padding: 0 2vw;
                     height: 5vh;
-                    width:100%;
-                    &>button{
-                        width:5%;
+                    width: 100%;
+
+                    &>button {
+                        width: 5%;
+                        height: 100%;
+                        margin: 0;
                         background-color: transparent;
-                        
+                        &>img {
+                            width: auto;
+                            height: 2vh;
+                        }
+
                     }
                 }
-                &>.Day-Services{
-                    width:90%;
-                    &>button{
-                        width:25%;
+
+                &>.Day-Services {
+                    width: 90%;
+
+                    &>button {
+                        width: 25%;
                     }
-                    &>.Program-Service-Container{
-                        width:90%;
-                        &>.Service{
+
+                    &>.Program-Service-Container {
+                        width: 90%;
+
+                        &>.Service {
                             height: 5vh;
                             background-color: #a18bdd;
                             width: 100%;
@@ -141,17 +162,26 @@ button{
                             padding: 0 1vw;
                             border-radius: 15px;
                             margin-top: 1vh;
-                            &>img{
+
+                            &>img {
                                 width: auto;
                                 height: 50%;
                                 border-radius: 15px;
                             }
-                            &>button{
+
+                            &>div{
+                                justify-content: end;
+                                &>button {
                                 width: 5%;
                                 background-color: transparent;
-
-
+                                    &>img {
+                                        width: auto;
+                                        height: 2vh;
+                                    }
+                                }
                             }
+                            
+                            
                         }
                     }
                 }
@@ -161,121 +191,164 @@ button{
 }
 
 
-#PopUp{
+#PopUp {
     position: fixed;
     z-index: 1;
-    top:0; left:0;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     background-color: rgba(11, 0, 14, 0.336);
-    &>#CreateService{
-        
+
+    &>#CreateService {
+
         background-color: whitesmoke;
         border-radius: 15px;
-        height:30vh;
-        width:20vw;
+        height: 30vh;
+        width: 20vw;
         padding: 2vw 5vw 0vw 5vw;
         margin: auto;
         margin-top: 35vh;
         box-shadow: 0 0 20px rgba(11, 0, 14, 0.171);
 
-        &>div{
-            width:100%;
-            &>*{
+        &>div {
+            width: 100%;
+
+            &>* {
                 margin-top: 2vh;
-                width:100%;
+                width: 100%;
                 min-height: 5vh;
             }
         }
     }
-
-    &>#ContractView{
-        background-color: whitesmoke;
-        border-radius: 15px;
-        min-height:70vh;
-        width:60vw;
-        padding: 2vw 5vw 0vw 5vw;
-        margin: auto;
-        margin-top: 15vh;
-        box-shadow: 0 0 20px rgba(11, 0, 14, 0.171);
-        box-sizing: border-box;
-        justify-content: start;
-        &>*{
-            width: 100%;
-        }
-        &>#Subseason-Container{
-            margin-top: 5vh;
-            height:50vh;
-            overflow-y: scroll;
-            &>.subseason{
-                width:100%;
-
-                & .inputfieldGrey{
-                    background-color: whitesmoke;
-                    height:4vh;
-                    width: 7vw;
-                }
-                &>*{
-                    width:100%;
-                }
-                &>.subseason-info{
-                    background-image: linear-gradient(125deg, orange, rgb(255, 166, 0));
-                    color: white;
-                    border-radius: 15px;
-                    padding: 1vw;
-                    box-sizing: border-box;
-                }
-
-                &>.subseason-details{
-                    background-color: rgb(255, 203, 160);
-                    padding: 1vw 0 3vw 0;
-                    box-sizing: border-box;
-                    
-
-                    &>*{
-                        height:10vh;
-                        
-                    }
-                    &>.subseason-date-range{
-                        &>*>*{
-                             margin: 0 1vw 0 0;
-                        }
-                    }
-                    &>.subseason-detail-config{
-                        width: 100%;
-                        justify-content: space-evenly;
-                        box-sizing: border-box;
-                        &>*{
-                            padding: 0 0.25vw;
-                        }
-                        
-                    }
-                    
-                }
-                
-                &.subseason-selected{
-
-                }
-            }
-        }
-    }
 }
-
-.dropDown{
-    box-sizing: border-box;
-    border-radius: 1000px;
-    padding: 0 1vw;
-}
-
-.inputfieldGrey{
+.inputfieldGrey {
     box-sizing: border-box;
     background-color: rgb(214, 196, 210);
     border-radius: 1000px;
     border: none;
     padding-left: 1vw;
 }
+#ContractView {
+    z-index: 2;
+    position: absolute;
+    top: 5vh;
+    left: 15vw;
 
+    background-color: whitesmoke;
+    border-radius: 5px;
+    min-height: 70vh;
+    width: 60vw;
+    padding: 2vw 5vw 2vw 5vw;
+    
+    margin: auto;
+    box-shadow: 0 0 20px rgba(11, 0, 14, 0.171);
+    
+    justify-content: start;
 
+    &>* {
+        width: 100%;
+    }
 
+    &>#Subseason-Container {
+        margin-top: 5vh;
+        
+        
 
+        &>.subseason {
+            width: 100%;
+
+            & .inputfieldGrey {
+                background-color: whitesmoke;
+                border-radius: 5px;
+                height: 4vh;
+                width: 7vw;
+            }
+
+            &>* {
+                width: 100%;
+            }
+
+            &>.subseason-info {
+                cursor: pointer;
+                background-image: linear-gradient(125deg, orange, rgb(255, 166, 0));
+                color: white;
+                border-radius: 5px;
+                padding: 1vw;
+                box-sizing: border-box;
+            }
+
+            &>.subseason-details {
+                background-color: rgb(255, 203, 160);
+                padding: 1vw 0 3vw 0;
+                width:99%;
+                box-sizing: border-box;
+                display: none;
+
+                &>* {
+                    height: 10vh;
+
+                }
+
+                &>.subseason-date-range {
+                    &>*>* {
+                        margin: 0 1vw 0 0;
+                    }
+                }
+
+                &>.subseason-detail-config {
+                    width: 100%;
+                    justify-content: center;
+                    box-sizing: border-box;
+
+                    &>* {
+                        padding: 0 0.25vw;
+                    }
+
+                }
+                &>.subseason-detail-console {
+                    color:red;
+                    text-align: center;   
+                    height: 3vh;                 
+                }
+                &>.subseason-detail-options  {
+                    width: 40%;
+                    justify-content: space-around;
+                    margin: auto;
+                    &>*{
+                        width:45%;
+                    }
+
+                }
+
+            }
+
+            &.subseason-selected>.subseason-details {
+                display: block;
+            }
+        }
+    }
+}
+
+.dropDown {
+    box-sizing: border-box;
+    border-radius: 1000px;
+    padding: 0 1vw;
+}
+
+.title-inputfield{
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    border-bottom: 2px solid rgb(184, 184, 226);
+    height: 5vh;
+    font-size: 1.5rem;
+    border-radius: 15px 15px 0 0;
+    transition: all 0.2s ease;
+    padding: 0 1vw;
+    &:focus{
+        background-color: rgb(184, 184, 226);
+        outline: none;
+    }
+}
 

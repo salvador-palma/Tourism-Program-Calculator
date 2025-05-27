@@ -7,7 +7,7 @@
     <title>Program Costs</title>
 </head>
 <body>
-    <aside id="PopUp" class="">
+    <aside id="PopUp" class="hidden">
         <section id="CreateService" class="hidden">
             <div class="vertical-display dropDown">
                 <select class="dropDown" id="AddServiceType">
@@ -27,60 +27,6 @@
                 
             </div>
         </section>
-        <section id="ContractView" class="vertical-display">
-            <div id="ContractView-Title" class="vertical-display">
-                <h1>Transfer Van 4PAX</h1>
-                <span>Type - Transfer</span>
-            </div>
-
-            <div id="Subseason-Container" class="vertical-display">
-                <div class="subseason vertical-display subseason-selected">
-                    <div class="subseason-info horizontal-display">
-                        <span>1 Jan - 5 Feb</span>
-                    </div>
-                    <div class="subseason-details vertical-display">
-                        <div class="subseason-date-range horizontal-display">
-                            <div class="horizontal-display textinput">
-                            <label for="Program-Name">From</label>
-                            <input type="date" class="inputfieldGrey"/>
-                            </div>
-                            <div class="horizontal-display textinput">
-                            <label for="Program-Name">To</label>
-                            <input type="date"  class="inputfieldGrey"/>
-                            </div>
-                        </div>
-                        <div class="subseason-detail-config horizontal-display">
-                            <div class="vertical-display textinput">
-                            <label for="Bus">Bus</label>
-                            <input type="number"  name="Bus" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Guide">Guide</label>
-                                <input type="number" name="Guide" class="inputfieldGrey"/>
-                            </div>
-                            <div class="vertical-display textinput">
-                                <label for="Others">Others</label>
-                                <input type="number" name="Others" class="inputfieldGrey"/>
-                            </div>
-                            
-                        </div>
-                       
-                    </div>
-
-                </div>
-                
-            </div>
-        
-
-            </div>
-            <div id="ContractOptions" class="horizontal-display">
-                <button>Back</button>
-                <button>+ Season</button>
-                <button>Save</button>
-
-            </div>
-            
-        </section>
 
     </aside>
     <main class="vertical-display">
@@ -91,8 +37,8 @@
         <div id="Program-Container" class="vertical-display ">
 
             <div id="Program-Name-Container" class="horizontal-display textinput" style="width: 30vw;">
-                <label for="Program-Name">Program Name:</label>
-                <input type="text" id="Program-Name" />
+
+                <input type="text" id="Program-Name" class="title-inputfield" placeholder="Program Name"/>
             </div>
 
 
@@ -100,20 +46,7 @@
                 
                 <div id="Program-Day-Container" class="vertical-display">
                     <div class="Day-Container vertical-display">
-                        <div class="Day-Description horizontal-display">
-                            <span>DAY 1</span>
-                            <button class="Program-Day-Delete static-button" onclick="RemoveDay(this)">x</button>
-                        </div>
-                        <div class="Day-Services vertical-display">
-                            <div class="Program-Service-Container" class="vertical-display">
-                                <div class="Service horizontal-display">
-                                    <img src="/img/Airplane.png" />
-                                    <span>LIS - PAR Flight x1 Economy Seat</span>
-                                    <button class="static-button">x</button>
-                                </div>
-                            </div>
-                            <button class="Program-Day-Service">+ Service</button>
-                        </div>
+                        
                         
                     </div>
                 </div>
@@ -122,9 +55,16 @@
                 
             </div>
             
-            <div id="Program-Calculate-Container" class="vertical-display">
-                
-                
+            <div id="Program-Calculate-Container" class="vertical-display" style="width:100%">
+                <div class="horizontal-display"  style="width:100%">
+                    
+                    <button id="Load-Program">Load Program</button>
+                    <button id="Download-Program">Download Program</button>
+                </div>
+                <div>
+                    
+                    <button id="Load-Program">Calculate Costs</button>
+                </div>
             </div>            
         </div>
 
@@ -132,6 +72,23 @@
         <div id="Console">
 
         </div>
+        
     </main>
+        <section id="ContractView" class="vertical-display hidden">
+            <div id="ContractView-Title" class="vertical-display">
+                <h1>Transfer Van 4PAX</h1>
+                <span>Type - Transfer</span>
+            </div>
+
+            <div id="Subseason-Container" class="vertical-display">
+                
+
+            </div>
+            <div id="ContractOptions" class="horizontal-display">
+                <button id="CloseSeasonButton">Back</button>
+                <button id="AddSeasonButton">+ Season</button>
+            </div>
+            
+        </section>
 </body>
 </html>
